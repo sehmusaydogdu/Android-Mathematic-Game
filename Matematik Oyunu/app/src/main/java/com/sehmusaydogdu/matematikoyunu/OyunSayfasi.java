@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-
-
 public class OyunSayfasi extends AppCompatActivity {
 
 
@@ -116,6 +114,7 @@ public class OyunSayfasi extends AppCompatActivity {
 
         txtHakInt--;
 
+        String message;
         if(txtHakInt>0){
             txtHak.setText(String.valueOf(txtHakInt));
         }
@@ -124,37 +123,24 @@ public class OyunSayfasi extends AppCompatActivity {
             txtHak.setText(String.valueOf("0"));
 
             if (txtSkorInt>txtHighSkorInt){
+
+                message="Tebrikler, Skoru Geçtiniz  :  "+String.valueOf(txtSkorInt);
                 Toast.makeText(this,"Tebrikler, Skoru Geçtiniz.",Toast.LENGTH_LONG).show();
                 txtHighSkor.setText("En Yüksek Skor :  "+String.valueOf(txtSkorInt));
                 txtHighSkorInt=txtSkorInt;
             }
             else {
+                message="Üzgünüm, Skoru geçemediniz  :  "+txtSkorInt;
                 Toast.makeText(this,"Üzgünüm, Skoru geçemediniz",Toast.LENGTH_SHORT).show();
             }
             txtSkorInt=0;
             txtSkor.setText("Skorunuz :  "+String.valueOf("0"));
 
-            AlertDialog alertMessage = new AlertDialog.Builder(this).create();
-            alertMessage.setTitle("Oyun Bitti");
-            alertMessage.setMessage("Tekrar Oynamak İster Misiniz ?");
+            Intent intent=new Intent(this,BitisSayfasi.class);
+            intent.putExtra("Message",message);
+            startActivity(intent);
+            finish();
 
-            alertMessage.setButton(AlertDialog.BUTTON_POSITIVE,"OK", new DialogInterface.OnClickListener(){
-
-                public void onClick(DialogInterface dialog, int which) {
-                    OyunuBaslat();
-                    txtHak.setText("3");
-                    txtHakInt=3;
-                }
-            });
-
-            alertMessage.setButton(AlertDialog.BUTTON_NEGATIVE,"CANCEL", new DialogInterface.OnClickListener(){
-
-                public void onClick(DialogInterface dialog, int which) {
-                     finish();
-                    System.exit(0);
-                }
-            });
-            alertMessage.show();
         }
     }
 
